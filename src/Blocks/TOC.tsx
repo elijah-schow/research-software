@@ -1,6 +1,8 @@
 import React from 'react'
 
-const TOC: React.FC<TOC> = (props) => {
+export type TOCProps = TOC;
+
+export const TOC: React.FC<TOCProps> = (props) => {
     return <div>TOC</div>;
 }
 

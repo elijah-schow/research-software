@@ -36,9 +36,18 @@ body {
 
 .citation {
   font-style: italic;
+  font-size: .85rem;
 }
 
 .quote {
   margin: 0;
   padding: 0;
 }
+
+/* .quote::before {
+  content: '\201C';
+}
+
+.quote::after {
+  content: '\201D';
+} */

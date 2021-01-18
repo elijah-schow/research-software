@@ -1,0 +1,17 @@
+import React from 'react'
+
+export type AuthorProps = Author;
+
+export const Citation: React.FC<AuthorProps> = ({ name, qualifictions }) => {
+    // TODO: render qualifications as an inline list
+    return <span className="author">
+        <span className="author-name">{name}</span>
+        {qualifictions.length > 0
+            && <>
+                {" "}
+                ({qualifictions.join(', ')})
+            </>}
+    </span>
+}
+
+export default Citation;

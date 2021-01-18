@@ -30,9 +30,9 @@ export const author = (override?: Partial<Author>): Author => ({
 
 export const source = (override?: Partial<Source>): Source => ({
     authors: [author()],
-    title: "Everything is Fake",
-    publication: "Fake Press",
-    url: "https://faker.fake/articles/2019/everything-is-fake",
+    title: faker.lorem.words(3),
+    publication: faker.company.companyName(),
+    url: `${faker.internet.url()}/articles/${faker.lorem.words(4).replaceAll(' ', '-')}`,
     date: faker.date.past(),
     accessed_at: new Date(), // now
     ...override,

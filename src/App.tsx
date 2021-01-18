@@ -7,7 +7,18 @@ function App() {
   const [state, setState] = useState<Brief>(brief());
 
   return <article className="brief">{
-    state.blocks.map((p, k) => <Blocks key={k} {...p} />)
+    state.blocks
+      // Resolve citations (TODO: find a better way to do this)
+      .map(block => block.type !== 'evidence'
+        ? block
+        : {
+          ...block,
+          source: block.source
+            ? state.sources[block.source] as Source
+            : undefined,
+        })
+      // Render blocks
+      .map((p, k) => <Blocks key={k} {...p} />)
   }</article>;
 }
 

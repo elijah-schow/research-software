@@ -1,5 +1,7 @@
 import React from 'react'
 
+export type HeadingProps = Heading;
+
 const elements = {
     1: 'h1',
     2: 'h2',
@@ -9,7 +11,7 @@ const elements = {
     6: 'h6',
 };
 
-const Heading: React.FC<Heading> = (props) => {
+export const Heading: React.FC<HeadingProps> = (props) => {
     const type = elements[props.level] || elements[1];
     return React.createElement(type, null, props.text);
 }

@@ -1,12 +1,17 @@
 import React from 'react'
+import Author from './Author'
 
-export type CitationProps = {
-    source?: ID;
-}
+export type CitationProps = Source
 
-export const Citation: React.FC<CitationProps> = ({ source }) => {
-    if (!source) return null;
-    return <div className="citation">{source}</div>;
+export const Citation: React.FC<CitationProps> = ({ authors, title, date, publication, url, tracking }) => {
+    return <div className="citation">
+        {authors?.map((v, i) => <Author key={i} {...v} />)}
+        {title && <>`, &ldquo;{title}&rdquo;</>}
+        {date && `, ${date.toLocaleDateString()}`}
+        {publication && `, ${publication}`}
+        {url && <>, <a href={url} target="_blank" rel="noopener noreferrer">{url}</a></>}
+        {tracking && `, ${tracking}`}
+    </div>;
 }
 
 export default Citation;
