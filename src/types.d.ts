@@ -1,5 +1,7 @@
 type ID = number;
 
+type Level = 1 | 2 | 3 | 4 | 5 | 6;
+
 type Brief = {
     metadata: Metadata;
     blocks: Block[];
@@ -45,13 +47,13 @@ type TextBlock = BaseBlock & {
 type Heading = BaseBlock & {
     type: 'heading';
     text: string;
-    level: number;
+    level: Level;
 }
 
 type TOC = BaseBlock & {
     type: 'toc';
     text: string;
-    levels: number;
+    levels: Level;
 }
 
 type Evidence = BaseBlock & {
