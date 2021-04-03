@@ -4,21 +4,23 @@ import { brief } from './factories';
 import Blocks from './Blocks';
 
 function App() {
-  const [state, setState] = useState<Brief>(brief());
+  const [state] = useState<Brief>(brief());
 
   return <article className="brief">{
-    state.blocks
-      // Resolve citations (TODO: find a better way to do this)
-      .map(block => block.type !== 'evidence'
-        ? block
-        : {
-          ...block,
-          source: block.source
-            ? state.sources[block.source] as Source
-            : undefined,
-        })
-      // Render blocks
-      .map((p, k) => <Blocks key={k} {...p} />)
+    Object.values(state.blocks)
+      // Resolve citations (TODO: find a better way)
+      .map(block => (
+        block.type !== 'evidence'
+          ? block
+          : {
+            ...block,
+            source: block.source
+              ? state.sources[block.source] as Source
+              : undefined,
+          }
+      ))
+      // Render bloks
+      .map(block => <Blocks key={block.id} {...block} />)
   }</article>;
 }
 

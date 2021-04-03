@@ -1,6 +1,8 @@
 import faker from 'faker';
+import { nanoid } from 'nanoid';
 
 export const heading = (override?: Partial<Heading>): Heading => ({
+    id: nanoid(),
     type: 'heading',
     text: faker.lorem.sentence(),
     level: 1,
@@ -8,6 +10,7 @@ export const heading = (override?: Partial<Heading>): Heading => ({
 });
 
 export const toc = (override?: Partial<TOC>): TOC => ({
+    id: nanoid(),
     type: 'toc',
     text: faker.lorem.words(4),
     levels: 3,
@@ -29,6 +32,7 @@ export const author = (override?: Partial<Author>): Author => ({
 });
 
 export const source = (override?: Partial<Source>): Source => ({
+    id: nanoid(),
     authors: [author()],
     title: faker.lorem.words(3),
     publication: faker.company.companyName(),
@@ -39,65 +43,41 @@ export const source = (override?: Partial<Source>): Source => ({
 });
 
 export const evidence = (override?: Partial<Evidence>): Evidence => ({
+    id: nanoid(),
     type: 'evidence',
     tag: faker.lorem.sentence(),
     subtag: faker.lorem.sentence(),
     quote: faker.lorem.paragraph(),
-    source: 0,
+    source: '',
     ...override,
 });
 
-/**
- * @source https://stackoverflow.com/a/50948927
- */
-// export function randomKey<K, V>(map: Map<K, V>) {
-//     const key_list = Array.from(map.keys());
-//     const index = Math.floor(Math.random() * map.size);
-//     const key = key_list[index];
-//     return key;
-// }
-
 export const brief = (): Brief => {
-    // Create a pool of sources - using Maps
-    // const NUMBER_OF_SOURCES = 5;
-    // const sources = new Map();
-
-    // for (let id = 0; id < NUMBER_OF_SOURCES; id++) {
-    //     sources.set(id, source());
-    // }
-
-    // Create a bunch of evidence - using maps
-    // const blocks = new Map();
-
-    // blocks.set(blocks.size, heading());
-    // blocks.set(blocks.size, toc());
-
-    // const NUMBER_OF_CARDS = 10;
-
-    // for (let id = 0; id < NUMBER_OF_CARDS; id++) {
-    //     const source = randomKey(sources);
-    //     blocks.set(blocks.size, evidence({ source }));
-    // }
 
     // Create a pool of sources - using arrays
     const NUMBER_OF_SOURCES = 5;
-    const sources = [];
+    const sources: { [key: string]: Source } = {};
 
     for (let id = 0; id < NUMBER_OF_SOURCES; id++) {
-        sources.push(source());
+        const src = source();
+        sources[src.id] = src;
     }
 
-    // Create a bunch of evidence - using arrays
-    const blocks: Block[] = [
-        heading(),
-        toc(),
-    ];
+    // Gather a bunch of evidence
+    const blocks: { [key: string]: Block } = {};
+
+    let id = nanoid();
+    blocks[id] = heading({ id });
+
+    id = nanoid();
+    blocks[id] = toc({ id });
 
     const NUMBER_OF_CARDS = 10;
 
     for (let id = 0; id < NUMBER_OF_CARDS; id++) {
-        const source = Math.floor(Math.random() * sources.length);
-        blocks.push(evidence({ source }));
+        const { id } = faker.random.objectElement(sources, "id");
+        const ev = evidence({ source: id });
+        blocks[ev.id] = ev;
     }
 
     return {

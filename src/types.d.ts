@@ -1,11 +1,15 @@
-type ID = number;
+type ID = string;
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
 
 type Brief = {
     metadata: Metadata;
-    blocks: Block[];
-    sources: Source[];
+    blocks: {
+        [key: string]: Block
+    };
+    sources: {
+        [key: string]: Source
+    };
     custom?: Map<string, string>;
 }
 
@@ -17,6 +21,7 @@ type Metadata = {
 }
 
 type Source = {
+    id: string;
     accessed_at?: Date;
     authors?: Author[];
     date?: Date;
@@ -35,6 +40,7 @@ type Author = {
 type Block = TextBlock | Heading | TOC | Evidence;
 
 type BaseBlock = {
+    id: ID;
     order?: number;
     type: string;
 }
