@@ -83,10 +83,13 @@ type Range = {
     attributes: {}
 }
 
-type Action =
-  | { type: string };
-
 type PseudoContext = {
     brief: Brief,
     dispatch: React.Dispatch<Action>,
 };
+
+type Action =
+  | { type: "UPSERT_BLOCK", block: Block }
+  | { type: "DELETE_BLOCK", id: ID }
+  | { type: "DELETE_BLOCK", block: Block }
+  ;
