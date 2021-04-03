@@ -19,7 +19,7 @@ function App() {
               : undefined,
           }
       ))
-      // Render bloks
+      // Render blocks
       .map(block => <Blocks key={block.id} {...block} />)
   }</article>;
 }
