@@ -87,6 +87,7 @@ export const brief = (): Brief => {
     }
 
     return {
+        id: nanoid(),
         metadata: {
             author: faker.name.findName(),
             title: faker.lorem.words(5),
@@ -98,3 +99,14 @@ export const brief = (): Brief => {
     }
 
 };
+
+export const newBrief = (): Brief => ({
+    id: nanoid(),
+    metadata: {
+        title: "Untitled",
+        created_at: new Date(),
+        updated_at: new Date(),
+    },
+    blocks: {},
+    sources: {},
+})

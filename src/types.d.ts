@@ -3,6 +3,7 @@ type ID = string;
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
 
 type Brief = {
+    id: ID;
     metadata: Metadata;
     blocks: {
         [key: string]: Block
@@ -88,8 +89,10 @@ type PseudoContext = {
     dispatch: React.Dispatch<Action>,
 };
 
+type State = {
+    brief: Brief;
+}
+
 type Action =
-  | { type: "UPSERT_BLOCK", block: Block }
-  | { type: "DELETE_BLOCK", id: ID }
-  | { type: "DELETE_BLOCK", block: Block }
+  | { type: "GENERATE" }
   ;

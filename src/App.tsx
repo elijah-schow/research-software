@@ -1,43 +1,44 @@
 import React, { useReducer } from 'react';
-import './App.css';
+
 import { brief as briefFactory } from './factories';
 import Blocks from './Blocks';
+import Toolbar from './Toolbar';
 
-const reducer: React.Reducer<Brief, Action> =
+const initialState = {
+  brief: briefFactory()
+};
+
+const reducer: React.Reducer<State, Action> =
   (previous, action) => {
     switch(action.type) {
-      case "UPSERT_BLOCK": return {
+      case "GENERATE": return {
         ...previous,
-        blocks: {
-          ...previous.blocks,
-          [action.block.id]: action.block,
-        }
+        brief: briefFactory(),
       };
-      case "DELETE_BLOCK":
-        const id = 'id' in action ? action.id : action.block.id;
-        const { [id]: omit, ...blocks } = previous.blocks;
-        return {
-          ...previous,
-          blocks,
-        };
-      default: return previous;
+      default:
+        console.error(`Unknown action`, action);
+        return previous;
     }
   }
 
 function App() {
-  const [brief, dispatch] = useReducer(reducer, {}, briefFactory);
-  return <article className="brief">{
-    Object
-      .values(brief.blocks)
-      .map(block => (
-        <Blocks
-          brief={brief}
-          dispatch={dispatch}
-          key={block.id}
-          {...block}
-        />
-      ))
-  }</article>;
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return <>
+    <Toolbar brief={state.brief} dispatch={dispatch} />
+    <article className="brief">{
+      Object
+        .values(state.brief.blocks)
+        .map(block => (
+          <Blocks
+            brief={state.brief}
+            dispatch={dispatch}
+            key={block.id}
+            {...block}
+          />
+        ))
+    }</article>
+  </>;
 }
 
 export default App;
