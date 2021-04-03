@@ -10,7 +10,8 @@ export const Evidence: React.FC<EvidenceProps> = (props) => {
         <div className="tag">{props.tag || 'Untagged'}</div>
         {props.subtag && <div className="subtag">{props.subtag}</div>}
         {props.source && <Citation {...props.source} />}
-        {props.quote && <blockquote className="quote">&ldquo;{props.quote}&rdquo;</blockquote>}
+        {/* TODO: create component to render rich text */}
+        {props.quote && <blockquote className="quote">&ldquo;{props.quote.text}&rdquo;</blockquote>}
     </article>;
 }
 

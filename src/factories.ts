@@ -42,12 +42,18 @@ export const source = (override?: Partial<Source>): Source => ({
     ...override,
 });
 
+export const quote = (override?: Partial<RichText>): RichText => ({
+    text: faker.lorem.paragraph(),
+    metadata: [],
+    ...override,
+});
+
 export const evidence = (override?: Partial<Evidence>): Evidence => ({
     id: nanoid(),
     type: 'evidence',
     tag: faker.lorem.sentence(),
     subtag: faker.lorem.sentence(),
-    quote: faker.lorem.paragraph(),
+    quote: quote(),
     source: '',
     ...override,
 });

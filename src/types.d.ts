@@ -67,11 +67,18 @@ type Evidence = BaseBlock & {
     tag: string;
     subtag: string;
     source?: ID;
-    // quote: Inline[];
-    quote: string;
+    quote: RichText;
 }
 
-// type Inline = {
-//   text: string;
-//   style?: 'emphasis';
-// }
+// TODO: continue research and consider compat with CKEditor or Quill specs
+// https://ckeditor.com/docs/ckeditor5/latest/framework/guides/architecture/editing-engine.html
+type RichText = {
+    text: string;
+    metadata: Range[]
+};
+
+type Range = {
+    start: number
+    end: number
+    attributes: {}
+}
