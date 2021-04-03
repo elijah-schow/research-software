@@ -1,17 +1,18 @@
 import React from 'react'
 import Citation from './Citation'
 
-export type EvidenceProps = Omit<Evidence, 'source'> & {
-    source?: Source,
-};
+export type EvidenceProps = Evidence & PseudoContext;
 
-export const Evidence: React.FC<EvidenceProps> = (props) => {
+export const Evidence: React.FC<EvidenceProps> = ({
+    tag, subtag, source: sourceID, quote, brief, dispatch
+}) => {
+    const source = sourceID ? brief.sources[sourceID] : null;
     return <article className="evidence">
-        <div className="tag">{props.tag || 'Untagged'}</div>
-        {props.subtag && <div className="subtag">{props.subtag}</div>}
-        {props.source && <Citation {...props.source} />}
+        <div className="tag">{tag || 'Untagged'}</div>
+        {subtag && <div className="subtag">{subtag}</div>}
+        {source && <Citation {...source} />}
         {/* TODO: create component to render rich text */}
-        {props.quote && <blockquote className="quote">&ldquo;{props.quote.text}&rdquo;</blockquote>}
+        {quote && <blockquote className="quote">&ldquo;{quote.text}&rdquo;</blockquote>}
     </article>;
 }
 

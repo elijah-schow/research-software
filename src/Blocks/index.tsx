@@ -4,7 +4,9 @@ import { Heading, HeadingProps } from './Heading';
 import { Text, TextProps } from './Text';
 import { TOC, TOCProps } from './TOC';
 
-export type BlocksProps = EvidenceProps | HeadingProps | TextProps | TOCProps;
+export type BlockType = EvidenceProps | HeadingProps | TextProps | TOCProps;
+
+export type BlocksProps = BlockType & PseudoContext;
 
 export const Blocks: React.FC<BlocksProps> = (props) => {
     switch (props.type) {

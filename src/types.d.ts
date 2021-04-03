@@ -82,3 +82,11 @@ type Range = {
     end: number
     attributes: {}
 }
+
+type Action =
+  | { type: string };
+
+type PseudoContext = {
+    brief: Brief,
+    dispatch: React.Dispatch<Action>,
+};

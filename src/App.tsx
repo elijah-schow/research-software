@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
-import { brief } from './factories';
+import { brief as briefFactory } from './factories';
 import Blocks from './Blocks';
 
+const reducer = (previous: Brief, action: Action): Brief => {
+  switch(action.type) {
+    default: return previous;
+  }
+}
+
 function App() {
-  const [state] = useState<Brief>(brief());
+  const [brief, dispatch] = useReducer(reducer, {}, briefFactory);
 
   return <article className="brief">{
-    Object.values(state.blocks)
-      // Resolve citations (TODO: find a better way)
+    Object
+      .values(brief.blocks)
       .map(block => (
-        block.type !== 'evidence'
-          ? block
-          : {
-            ...block,
-            source: block.source
-              ? state.sources[block.source] as Source
-              : undefined,
-          }
+        <Blocks
+          brief={brief}
+          dispatch={dispatch}
+          key={block.id}
+          {...block}
+        />
       ))
-      // Render blocks
-      .map(block => <Blocks key={block.id} {...block} />)
   }</article>;
 }
 
