@@ -4,7 +4,7 @@ import "./style.css"
 
 export type EvidenceProps = Evidence & PseudoContext;
 
-export const Evidence: FC<EvidenceProps> = ({ brief, dispatch, ...block }) => {
+export const Evidence: FC<EvidenceProps> = ({ state: { brief }, dispatch, ...block }) => {
     const [editing, setEditing] = useState(false);
 
     const source = block.source ? brief.sources[block.source] : null;

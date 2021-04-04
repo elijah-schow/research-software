@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer } from 'react';
-import throttle from 'lodash/throttle';
 import localforage from 'localforage';
+import throttle from 'lodash/throttle';
 
 import { brief as briefFactory, newBrief } from './factories';
-import Blocks from './Blocks';
 import Toolbar from './Toolbar';
+import Brief from './Brief';
 
 const initializer = (): State => ({
   brief: newBrief()
@@ -49,25 +49,11 @@ function App() {
   }, []);
 
   // Save application state when it changes
-  // useEffect(() => { save(state); }, [state]);
-  useEffect(() => {
-    save(state);
-  }, [state]);
+  useEffect(() => { save(state); }, [state]);
 
   return <>
-    <Toolbar brief={state.brief} dispatch={dispatch} />
-    <article className="brief">{
-      Object
-        .values(state.brief.blocks)
-        .map(block => (
-          <Blocks
-            brief={state.brief}
-            dispatch={dispatch}
-            key={block.id}
-            {...block}
-          />
-        ))
-    }</article>
+    <Toolbar state={state} dispatch={dispatch} />
+    <Brief state={state} dispatch={dispatch} {...state.brief} />
   </>;
 }
 

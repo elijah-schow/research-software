@@ -85,8 +85,9 @@ type Range = {
 }
 
 type PseudoContext = {
-    brief: Brief,
+    state: State,
     dispatch: React.Dispatch<Action>,
+    path?: string,
 };
 
 type State = {
