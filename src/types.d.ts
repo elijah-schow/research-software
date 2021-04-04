@@ -97,4 +97,5 @@ type State = {
 type Action =
   | { type: "GENERATE" }
   | { type: "LOAD", state: State }
+  | { type: "SET", path: string, value: unknown } // This destroys type safety :(
   ;
