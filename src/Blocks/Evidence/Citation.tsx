@@ -14,4 +14,4 @@ export const Citation: React.FC<CitationProps> = ({ authors, title, date, public
     </div>;
 }
 
-export default Citation;
+export default React.memo(Citation);

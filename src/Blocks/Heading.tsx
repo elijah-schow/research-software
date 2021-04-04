@@ -16,4 +16,4 @@ export const Heading: React.FC<HeadingProps> = (props) => {
     return React.createElement(type, null, props.text);
 }
 
-export default Heading;
+export default React.memo(Heading);

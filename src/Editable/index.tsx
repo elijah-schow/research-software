@@ -46,4 +46,4 @@ const Editable: FC<EditableProps> = ({
     );
 };
 
-export default Editable;
+export default React.memo(Editable);

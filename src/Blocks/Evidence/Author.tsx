@@ -2,7 +2,7 @@ import React from 'react'
 
 export type AuthorProps = Author;
 
-export const Citation: React.FC<AuthorProps> = ({ name, qualifictions }) => {
+export const Author: React.FC<AuthorProps> = ({ name, qualifictions }) => {
     // TODO: render qualifications as an inline list
     return <span className="author">
         <span className="author-name">{name}</span>
@@ -14,4 +14,4 @@ export const Citation: React.FC<AuthorProps> = ({ name, qualifictions }) => {
     </span>
 }
 
-export default Citation;
+export default React.memo(Author);

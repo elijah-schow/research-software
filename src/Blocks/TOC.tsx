@@ -6,4 +6,4 @@ export const TOC: React.FC<TOCProps> = (props) => {
     return <div>TOC</div>;
 }
 
-export default TOC;
+export default React.memo(TOC);

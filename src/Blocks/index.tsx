@@ -18,4 +18,4 @@ export const Blocks: React.FC<BlocksProps> = (props) => {
     }
 }
 
-export default Blocks;
+export default React.memo(Blocks);

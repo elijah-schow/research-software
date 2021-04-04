@@ -1,4 +1,4 @@
-import { FC, useState, useRef, ChangeEventHandler, MouseEventHandler, useCallback } from 'react'
+import React, { FC, useState, useRef, ChangeEventHandler, useCallback } from 'react'
 import throttle from 'lodash/throttle';
 
 import useOutsideClick from "../../useOutsideClick";
@@ -16,11 +16,6 @@ export const Evidence: FC<EvidenceProps> = ({
     const [editing, setEditing] = useState(false);
 
     const source = block.source ? brief.sources[block.source] : null;
-
-    const onQuoteClick: MouseEventHandler<HTMLQuoteElement> = useCallback(
-        () => { setEditing(true); },
-        [setEditing]
-    );
 
     const throttledDispatch = useCallback(
         throttle(dispatch, 250),
@@ -85,4 +80,4 @@ export const Evidence: FC<EvidenceProps> = ({
     </article>;
 }
 
-export default Evidence;
+export default React.memo(Evidence);
