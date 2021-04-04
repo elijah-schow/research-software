@@ -1,28 +1,32 @@
-import React, { FC, useState } from "react";
+import React, { ChangeEventHandler, FC, KeyboardEventHandler, useState } from "react";
 
 import "./style.css"
 
 export type EditableProps = {
     value: string,
+    name: string,
     type?: string,
+    onChange: ChangeEventHandler,
     placeholder?: string,
-    children: React.ReactChild,
 };
 
 /** @source https://blog.logrocket.com/building-inline-editable-ui-in-react/ */
 
 const Editable: FC<EditableProps> = ({
+    name,
     value,
     type,
     placeholder = "Editable content",
-    children,
+    onChange,
     ...props
 }) => {
     const [editing, setEditing] = useState(false);
 
-    const onKeyDown = (event, type) => {
-        // no-op
-    };
+    // const onKeyDown: KeyboardEventHandler = (event, type) => {
+    //     // no-op
+    // };
+
+    const Control = type === "textarea" ? 'textarea' : 'input';
 
     return (
         <section {...props}>
@@ -30,14 +34,20 @@ const Editable: FC<EditableProps> = ({
                 <div
                     className="editable editing"
                     onBlur={() => setEditing(false)}
-                    onKeyDown={e => onKeyDown(e, type)}
+                    // onKeyDown={e => onKeyDown(e, type)}
                 >
-                    {children}
+                    <Control
+                        className="w-full"
+                        name={name}
+                        onChange={onChange}
+                        defaultValue={value}
+                        autoFocus
+                    />
                 </div>
             ) : (
                 <div
                     className="editable"
-                    onClick={() => setEditing(true)}
+                    onClick={() => { setEditing(true) }}
                 >
                     <span>{value || placeholder} </span>
                 </div>

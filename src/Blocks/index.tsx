@@ -6,7 +6,7 @@ import { TOC, TOCProps } from './TOC';
 
 export type BlockType = EvidenceProps | HeadingProps | TextProps | TOCProps;
 
-export type BlocksProps = BlockType & PseudoContext;
+export type BlocksProps = BaseBlock & BlockType;
 
 export const Blocks: React.FC<BlocksProps> = (props) => {
     switch (props.type) {

@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useCallback, ChangeEventHandler } from 'react'
+import throttle from 'lodash/throttle'
+import Editable from '../Editable';
 
-export type HeadingProps = Heading;
+export type HeadingProps = PseudoContext & Heading;
 
 const elements = {
     1: 'h1',
@@ -11,9 +13,35 @@ const elements = {
     6: 'h6',
 };
 
-export const Heading: React.FC<HeadingProps> = (props) => {
-    const type = elements[props.level] || elements[1];
-    return React.createElement(type, null, props.text);
+export const Heading: React.FC<HeadingProps> = ({ dispatch, ...block }) => {
+    const type = elements[block.level] || elements[1];
+
+    const throttledDispatch = useCallback(
+        throttle(dispatch, 250),
+        [dispatch]
+    );
+
+    const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+        (event) => {
+            throttledDispatch({
+                type: "SET",
+                path: `brief.blocks.${block.id}.${event.target.name}`,
+                value: event.target.value
+            });
+        },
+        [throttledDispatch, block]
+    );
+
+    const children = (
+        <Editable
+            name="text"
+            value={block.text}
+            onChange={onChange}
+            placeholder={`Heading ${block.level}`}
+        />
+    );
+
+    return React.createElement(type, null, children);
 }
 
 export default React.memo(Heading);
