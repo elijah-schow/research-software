@@ -28,6 +28,14 @@ const Editable: FC<EditableProps> = ({
 
     const Control = type === "textarea" ? 'textarea' : 'input';
 
+    const label = value
+        ? type === "textarea"
+            ? value.split('\n')
+                .filter(p => !!p.trim()) // remove empty paragraphs
+                .map(p => <p>{p}</p>)
+            : <span>{value}</span>
+        : placeholder
+
     return (
         <section {...props}>
             {editing ? (
@@ -48,9 +56,7 @@ const Editable: FC<EditableProps> = ({
                 <div
                     className="editable"
                     onClick={() => { setEditing(true) }}
-                >
-                    <span>{value || placeholder} </span>
-                </div>
+                >{label}</div>
             )}
         </section>
     );

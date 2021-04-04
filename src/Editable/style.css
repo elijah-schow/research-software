@@ -1,5 +1,7 @@
 .editable > textarea, 
 .editable > input {
+    /* width: inherit; */
+    height: inherit;
     font: inherit;
     color: inherit;
     text-align: inherit;
