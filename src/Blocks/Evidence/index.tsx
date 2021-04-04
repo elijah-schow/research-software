@@ -56,7 +56,7 @@ export const Evidence: FC<EvidenceProps> = ({
                 name="quote.text"
                 type="textarea"
                 onChange={onChange}
-                value={block.subtag}
+                value={block.quote.text}
                 placeholder="Quote"
             />
         </blockquote>
