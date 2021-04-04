@@ -1,3 +1,5 @@
+import { readlink } from "fs";
+
 type ID = string;
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;

@@ -2,10 +2,11 @@ import { FC, useState, useRef, ChangeEventHandler, MouseEventHandler, useCallbac
 import throttle from 'lodash/throttle';
 
 import useOutsideClick from "../../useOutsideClick";
+import Editable from '../../Editable';
 import Citation from './Citation'
 import "./style.css"
 
-export type EvidenceProps = Evidence & PseudoContext;
+export type EvidenceProps = PseudoContext & Evidence;
 
 export const Evidence: FC<EvidenceProps> = ({
     state: { brief },
@@ -26,11 +27,11 @@ export const Evidence: FC<EvidenceProps> = ({
         [dispatch]
     );
 
-    const onQuoteChange = useCallback<ChangeEventHandler<HTMLTextAreaElement>>(
+    const onChange = useCallback<ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>>(
         (event) => {
             throttledDispatch({
                 type: "SET",
-                path: `brief.blocks.${block.id}.quote.text`,
+                path: `brief.blocks.${block.id}.${event.target.name}`,
                 value: event.target.value
             });
         },
@@ -47,24 +48,40 @@ export const Evidence: FC<EvidenceProps> = ({
     });
 
     return <article className="evidence">
-        <div className="tag">{block.tag || 'Untagged'}</div>
-        {block.subtag && <div className="subtag">{block.subtag}</div>}
+        <div className="tag">
+            <Editable value={block.tag || 'Untagged'} placeholder="Tag">
+                <input
+                    className="w-full"
+                    name="tag"
+                    onChange={onChange}
+                    defaultValue={block.tag}
+                />
+            </Editable>
+        </div>
+        {block.subtag && <div className="subtag">
+            <Editable value={block.subtag} placeholder="Subtag">
+                <input
+                    className="w-full"
+                    name="subtag"
+                    onChange={onChange}
+                    defaultValue={block.subtag}
+                />
+            </Editable>
+        </div>}
         {source && <Citation {...source} />}
         {/* TODO: create component to render the quote */}
         {/* TODO: auto-calculate the textarea's height */}
-        {/* TODO: exit editing mode when the user clicks outside the textarea */}
         {/* TODO: place insertion point on the spot that the user clicked */}
-        <div ref={ref}>
-            {editing
-                ? <textarea className="quote" onChange={onQuoteChange}
-                    rows={4} defaultValue={block.quote.text} />
-                : block.quote && (
-                    <blockquote className="quote" onClick={onQuoteClick}>
-                        &ldquo;{block.quote.text}&rdquo;
-                    </blockquote>
-                )
-            }
-        </div>
+        <blockquote className="quote">
+            <Editable value={block.quote.text} placeholder="Quote">
+                <textarea
+                    className="w-full"
+                    name="quote.text"
+                    onChange={onChange}
+                    defaultValue={block.quote.text}
+                />
+            </Editable>
+        </blockquote>
     </article>;
 }
 
