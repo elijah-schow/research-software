@@ -95,4 +95,5 @@ type State = {
 
 type Action =
   | { type: "GENERATE" }
+  | { type: "LOAD", state: State }
   ;
