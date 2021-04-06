@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import './style.css'
+import './Outline.css'
 
 export type OutlineProps = PseudoContext;
 

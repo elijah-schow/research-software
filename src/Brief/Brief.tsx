@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import Blocks from './Blocks';
+import Blocks from './Blocks/Blocks';
 
-import "./style.css";
+import "./Brief.css";
 
 export type BriefProps = PseudoContext & Brief;
 

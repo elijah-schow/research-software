@@ -1,6 +1,6 @@
 import React, { useCallback, ChangeEventHandler } from 'react'
 import throttle from 'lodash/throttle'
-import Editable from '../../Editable';
+import Editable from '../../Editable/Editable';
 
 export type HeadingProps = PseudoContext & Heading;
 

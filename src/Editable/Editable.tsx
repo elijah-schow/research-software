@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FC, useState } from "react";
 
-import "./style.css"
+import "./Editable.css"
 
 export type EditableProps = {
     value: string,
