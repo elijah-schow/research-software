@@ -2,7 +2,7 @@ import React from 'react';
 import { Evidence, EvidenceProps } from './Evidence/Evidence';
 import { Heading, HeadingProps } from './Heading';
 import { Text, TextProps } from './Text';
-import { TOC, TOCProps } from './TOC';
+import { TOC, TOCProps } from './TOC/TOC';
 
 export type BlockType = EvidenceProps | HeadingProps | TextProps | TOCProps;
 
