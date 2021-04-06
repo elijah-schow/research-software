@@ -8,7 +8,7 @@ const Outline: FC<OutlineProps> = ({ state: { brief: { blocks } }, dispatch }) =
     const headings = Object.values(blocks)
         .filter(b => ['heading', 'evidence']
             .includes(b.type));
-        
+
     return (
         <aside className="outline">
             <ol className="outline-list">

@@ -1,7 +1,7 @@
 import React, { FC, ChangeEventHandler, useCallback } from 'react'
 import throttle from 'lodash/throttle';
 
-import Editable from '../../Editable';
+import Editable from '../../../Editable';
 import Citation from './Citation'
 import "./style.css"
 

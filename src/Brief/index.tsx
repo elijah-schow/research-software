@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Blocks from '../Blocks';
+import Blocks from './Blocks';
 
 import "./style.css";
 
