@@ -15,13 +15,16 @@ export const TOC: React.FC<TOCProps> = ({ state, dispatch, ...block}) => {
             <ol className="toc-list">
                 {headings.map((block, index) => (
                     <a className="toc-item" href={`#${block.id}`} role="listitem">
-                        <span className="toc-text">{
-                            block.type === 'evidence'
-                                ? block.tag
-                                : block.text
-                            }
-                        </span>
-                        <span className="toc-number">{index + 1}</span>
+                        <div>
+                            <span className="toc-number">{index + 1}.&nbsp;</span>
+                            <span className="toc-text">{
+                                block.type === 'evidence'
+                                    ? block.tag
+                                    : block.text
+                                }
+                            </span>
+                        </div>
+                        <div className="toc-page">1</div>
                     </a>
                 ))}
             </ol>

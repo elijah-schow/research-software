@@ -19,11 +19,6 @@
     color: blue;
 }
 
-.toc-text,
-.toc-number {
-    display: block;
-}
-
 .toc-item:last-child {
     padding-bottom: 1rem;
 }
