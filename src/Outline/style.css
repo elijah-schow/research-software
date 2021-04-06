@@ -8,6 +8,8 @@
     width: 25%;
     padding: 0;
     margin: 0;
+    height: calc(100vh - 3rem);
+    overflow-y: auto;
 }
 
 .outline-item {
@@ -28,4 +30,29 @@
 .outline-item + .outline-item {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+}
+
+
+.level-1 {
+    font-weight: bold;
+}
+
+.level-2 {
+    padding-left: 1rem;
+}
+
+.level-3 {
+    padding-left: 2rem;
+}
+
+.level-4 {
+    padding-left: 3rem;
+}
+
+.level-5 {
+    padding-left: 3rem;
+}
+
+.level-6 {
+    padding-left: 3rem;
 }

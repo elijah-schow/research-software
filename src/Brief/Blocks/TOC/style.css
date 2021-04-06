@@ -22,3 +22,27 @@
 .toc-item:last-child {
     padding-bottom: 1rem;
 }
+
+.level-1 {
+    font-weight: bold;
+}
+
+.level-2 {
+    padding-left: 1rem;
+}
+
+.level-3 {
+    padding-left: 2rem;
+}
+
+.level-4 {
+    padding-left: 3rem;
+}
+
+.level-5 {
+    padding-left: 3rem;
+}
+
+.level-6 {
+    padding-left: 3rem;
+}

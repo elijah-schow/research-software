@@ -13,7 +13,13 @@ const Outline: FC<OutlineProps> = ({ state: { brief: { blocks } }, dispatch }) =
         <aside className="outline">
             <ol className="outline-list">
                 {headings.map((block, index) => (
-                    <a className="outline-item" href={`#${block.id}`} role="listitem">
+                    <a
+                        className={block.type === 'heading'
+                            ? `outline-item level-${block.level}`
+                            : `outline-item level-3`}
+                        href={`#${block.id}`}
+                        role="listitem"
+                    >
                         <span className="outline-number">{index + 1}.&nbsp;</span>
                         <span className="outline-text">{
                             block.type === 'evidence'

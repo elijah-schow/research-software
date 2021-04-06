@@ -78,12 +78,21 @@ export const brief = (): Brief => {
     id = nanoid();
     blocks[id] = toc({ id });
 
-    const NUMBER_OF_CARDS = 10;
-
-    for (let id = 0; id < NUMBER_OF_CARDS; id++) {
-        const { id } = faker.random.objectElement(sources, "id");
-        const ev = evidence({ source: id });
-        blocks[ev.id] = ev;
+    const NUMBER_OF_SECTIONS = faker.random.number({ min: 3, max: 6 });
+    for (let section = 0; section < NUMBER_OF_SECTIONS; section++) {
+        const h1 = heading({ level: 1 });
+        blocks[h1.id] = h1;
+        const NUMBER_OF_SUBSECITONS = faker.random.number({ min: 3, max: 6 });
+        for(let subsection = 0; subsection < NUMBER_OF_SUBSECITONS; subsection++) {
+            const h2 = heading({ level: 2 });
+            blocks[h2.id] = h2;
+            const NUMBER_OF_CARDS = faker.random.number({ min: 3, max: 6 });
+            for (let id = 0; id < NUMBER_OF_CARDS; id++) {
+                const { id } = faker.random.objectElement(sources, "id");
+                const ev = evidence({ source: id });
+                blocks[ev.id] = ev;
+            }
+        }
     }
 
     return {
