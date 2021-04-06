@@ -12,7 +12,7 @@ export const heading = (override?: Partial<Heading>): Heading => ({
 export const toc = (override?: Partial<TOC>): TOC => ({
     id: nanoid(),
     type: 'toc',
-    text: faker.lorem.words(4),
+    text: 'Table of Contents',
     levels: 3,
     ...override,
 });

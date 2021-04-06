@@ -1,0 +1,29 @@
+/* TODO: https://markentier.tech/posts/2021/03/responsive-toc-leader-lines-with-css/ */
+
+.toc-list {
+    margin: 0;
+    padding: 0;
+}
+
+.toc-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    text-decoration: none;
+    color: black;
+}
+
+.toc-item:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+.toc-text,
+.toc-number {
+    display: block;
+}
+
+.toc-item:last-child {
+    padding-bottom: 1rem;
+}
