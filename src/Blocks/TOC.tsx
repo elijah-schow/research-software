@@ -1,9 +1,9 @@
 import React from 'react'
 
-export type TOCProps = TOC;
+export type TOCProps = PseudoContext & TOC;
 
-export const TOC: React.FC<TOCProps> = (props) => {
-    return <div>TOC</div>;
+export const TOC: React.FC<TOCProps> = ({ state, dispatch, ...block}) => {
+    return <div id={block.id}>TOC</div>;
 }
 
 export default React.memo(TOC);

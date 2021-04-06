@@ -4,9 +4,12 @@ import throttle from 'lodash/throttle';
 import set from 'lodash/set';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { brief as briefFactory, newBrief } from './factories';
-import Toolbar from './Toolbar';
-import Brief from './Brief';
+import { brief as briefFactory, newBrief } from '../factories';
+import Toolbar from '../Toolbar';
+import Brief from '../Brief';
+import Outline from '../Outline';
+
+import './style.css'
 
 const initializer = (): State => ({
   brief: newBrief()
@@ -58,10 +61,11 @@ function App() {
   // Save application state when it changes
   useEffect(() => { save(state); }, [state]);
 
-  return <>
+  return <div className="app">
     <Toolbar state={state} dispatch={dispatch} />
+    <Outline state={state} dispatch={dispatch} />
     <Brief state={state} dispatch={dispatch} {...state.brief} />
-  </>;
+  </div>;
 }
 
 export default App;

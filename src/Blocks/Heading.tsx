@@ -41,7 +41,9 @@ export const Heading: React.FC<HeadingProps> = ({ dispatch, ...block }) => {
         />
     );
 
-    return React.createElement(type, null, children);
+    const props = { id: block.id };
+
+    return React.createElement(type, props, children);
 }
 
 export default React.memo(Heading);

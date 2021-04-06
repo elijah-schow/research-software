@@ -1,0 +1,36 @@
+.brief {
+  font-family: 'Times New Roman';
+  line-height: 1.5rem;
+  max-width: 40rem;
+  width: 50%;
+}
+
+.evidence {
+  padding-bottom: 1.25rem;
+}
+  
+.tag {
+  font-weight: bold;
+}
+  
+.subtag {
+  font-size: .85rem;
+}
+  
+.citation {
+  font-style: italic;
+  font-size: .85rem;
+}
+  
+.quote {
+  margin: 0;
+  padding: 0;
+}
+  
+/* .quote::before {
+  content: '\201C';
+}
+  
+.quote::after {
+  content: '\201D';
+} */

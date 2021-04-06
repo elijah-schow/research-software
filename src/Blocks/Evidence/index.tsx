@@ -30,7 +30,7 @@ export const Evidence: FC<EvidenceProps> = ({
         [throttledDispatch, block]
     );
 
-    return <article className="evidence">
+    return <article id={block.id} className="evidence">
         <div className="tag">
             <Editable
                 name="tag"
