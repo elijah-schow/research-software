@@ -1,9 +1,9 @@
 import React, { FC, ChangeEventHandler, useCallback } from 'react'
 import throttle from 'lodash/throttle';
 
-import Editable from '../../../Editable/Editable';
+import Editable from '../../../Editable';
 import Citation from './Citation'
-import "./Evidence.css"
+import "./style.css"
 
 export type EvidenceProps = PseudoContext & Evidence;
 

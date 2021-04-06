@@ -1,5 +1,5 @@
 import React from 'react';
-import { Evidence, EvidenceProps } from './Evidence/Evidence';
+import { Evidence, EvidenceProps } from './Evidence';
 import { Heading, HeadingProps } from './Heading';
 import { Text, TextProps } from './Text';
 import { TOC, TOCProps } from './TOC';

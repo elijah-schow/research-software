@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import "./Toolbar.css";
+import "./style.css";
 
 export type ToolbarProps = PseudoContext;
 

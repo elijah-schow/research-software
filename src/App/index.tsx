@@ -5,11 +5,11 @@ import set from 'lodash/set';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { brief as briefFactory, newBrief } from '../factories';
-import Toolbar from '../Toolbar/Toolbar';
-import Brief from '../Brief/Brief';
-import Outline from '../Outline/Outline';
+import Toolbar from '../Toolbar';
+import Brief from '../Brief';
+import Outline from '../Outline';
 
-import './App.css'
+import './style.css'
 
 const initializer = (): State => ({
   brief: newBrief()
