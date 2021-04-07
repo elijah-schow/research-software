@@ -1,10 +1,13 @@
 import React, { FC } from 'react'
+import classnames from 'classnames'
 
 import './style.css'
 
 export type OutlineProps = PseudoContext;
 
-const Outline: FC<OutlineProps> = ({ state: { brief: { blocks } }, dispatch }) => {
+const Outline: FC<OutlineProps> = ({ state, dispatch }) => {
+    const { brief: { blocks } } = state;
+    
     const headings = Object.values(blocks)
         .filter(b => ['heading', 'evidence']
             .includes(b.type));
@@ -16,9 +19,13 @@ const Outline: FC<OutlineProps> = ({ state: { brief: { blocks } }, dispatch }) =
                     <a
                         id={`outline-${block.id}`}
                         key={block.id}
-                        className={block.type === 'heading'
-                            ? `outline-item level-${block.level}`
-                            : `outline-item level-3`}
+                        className={classnames(
+                            'outline-item',
+                            block.type === 'heading'
+                                ? `level-${block.level}`
+                                : 'level-3',
+                            { 'selected': state.selection.includes(block.id) }
+                        )}
                         href={`#${block.id}`}
                         role="listitem"
                     >
@@ -27,7 +34,7 @@ const Outline: FC<OutlineProps> = ({ state: { brief: { blocks } }, dispatch }) =
                             block.type === 'evidence'
                                 ? block.tag
                                 : block.text
-                            }
+                        }
                         </span>
                     </a>
                 ))}
