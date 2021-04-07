@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react'
 
 import './style.css'
@@ -10,11 +11,19 @@ export const TOC: React.FC<TOCProps> = ({ state, dispatch, ...block}) => {
             .includes(b.type));
 
     return (
-        <aside id={block.id} className="toc">
+        <aside
+            id={block.id}
+            className={classnames('toc', 'block', {
+                'selected': state?.selection?.includes(block.id),
+            })}
+            onClick={() => dispatch({ type: "SELECT", id: block.id })}
+        >
             <h2>{block.text}</h2>
             <ol className="toc-list">
                 {headings.map((_block, index, _blocks) => (
                     <a
+                        id={`toc-${_block.id}`}
+                        key={_block.id}
                         className={_block.type === 'heading'
                             ? `toc-item level-${_block.level}`
                             : `toc-item level-3`} // TODO: get current level

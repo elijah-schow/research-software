@@ -1,6 +1,8 @@
 import React, { useCallback, ChangeEventHandler } from 'react'
+import classnames from 'classnames'
+
 import throttle from 'lodash/throttle'
-import Editable from '../../Editable';
+import Editable from '../../Editable'
 
 export type HeadingProps = PseudoContext & Heading;
 
@@ -13,7 +15,7 @@ const elements = {
     6: 'h6',
 };
 
-export const Heading: React.FC<HeadingProps> = ({ dispatch, ...block }) => {
+export const Heading: React.FC<HeadingProps> = ({ state, dispatch, ...block }) => {
     const type = elements[block.level] || elements[1];
 
     const throttledDispatch = useCallback(
@@ -41,7 +43,15 @@ export const Heading: React.FC<HeadingProps> = ({ dispatch, ...block }) => {
         />
     );
 
-    const props = { id: block.id };
+    const props = {
+        id: block.id,
+        className: classnames({
+            'block': true,
+            'heading': true,
+            'selected': state?.selection?.includes(block.id),
+        }),
+        onClick: () => dispatch({ type: "SELECT", id: block.id }),
+    };
 
     return React.createElement(type, props, children);
 }

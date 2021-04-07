@@ -1,5 +1,6 @@
 import React, { FC, ChangeEventHandler, useCallback } from 'react'
 import throttle from 'lodash/throttle';
+import classNames from 'classnames';
 
 import Editable from '../../../Editable';
 import Citation from './Citation'
@@ -7,11 +8,8 @@ import "./style.css"
 
 export type EvidenceProps = PseudoContext & Evidence;
 
-export const Evidence: FC<EvidenceProps> = ({
-    state: { brief },
-    dispatch,
-    ...block
-}) => {
+export const Evidence: FC<EvidenceProps> = ({ state, dispatch, ...block }) => {
+    const { brief } = state;
     const source = block.source ? brief.sources[block.source] : null;
 
     const throttledDispatch = useCallback(
@@ -30,37 +28,45 @@ export const Evidence: FC<EvidenceProps> = ({
         [throttledDispatch, block]
     );
 
-    return <article id={block.id} className="evidence">
-        <div className="tag">
-            <Editable
-                name="tag"
-                onChange={onChange}
-                value={block.tag}
-                placeholder="Tag"
-            />
-        </div>
-        {block.subtag && <div className="subtag">
-            <Editable
-                name="subtag"
-                onChange={onChange}
-                value={block.subtag}
-                placeholder="Subtag"
-            />
-        </div>}
-        {source && <Citation {...source} />}
-        {/* TODO: create component to render the quote */}
-        {/* TODO: auto-calculate the textarea's height */}
-        {/* TODO: place insertion point on the spot that the user clicked */}
-        <blockquote className="quote">
-            <Editable
-                name="quote.text"
-                type="textarea"
-                onChange={onChange}
-                value={block.quote.text}
-                placeholder="Quote"
-            />
-        </blockquote>
-    </article>;
+    return (
+        <article
+            id={block.id}
+            className={classNames("evidence", "block", {
+                'selected': state?.selection?.includes(block.id),
+            })}
+            onClick={() => dispatch({ type: "SELECT", id: block.id })}
+        >
+            <div className="tag">
+                <Editable
+                    name="tag"
+                    onChange={onChange}
+                    value={block.tag}
+                    placeholder="Tag"
+                />
+            </div>
+            {block.subtag && <div className="subtag">
+                <Editable
+                    name="subtag"
+                    onChange={onChange}
+                    value={block.subtag}
+                    placeholder="Subtag"
+                />
+            </div>}
+            {source && <Citation {...source} />}
+            {/* TODO: create component to render the quote */}
+            {/* TODO: auto-calculate the textarea's height */}
+            {/* TODO: place insertion point on the spot that the user clicked */}
+            <blockquote className="quote">
+                <Editable
+                    name="quote.text"
+                    type="textarea"
+                    onChange={onChange}
+                    value={block.quote.text}
+                    placeholder="Quote"
+                />
+            </blockquote>
+        </article>
+    );
 }
 
 export default React.memo(Evidence);

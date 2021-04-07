@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { KeyboardEventHandler, useEffect, useReducer } from 'react';
 import localforage from 'localforage';
 import throttle from 'lodash/throttle';
 import set from 'lodash/set';
@@ -12,7 +12,9 @@ import Outline from '../Outline';
 import './style.css'
 
 const initializer = (): State => ({
-  brief: newBrief()
+  brief: newBrief(),
+  selection: [],
+  selection_mode: 'replace',
 });
 
 const initial = initializer();
@@ -26,16 +28,17 @@ const save = throttle(async (state: State) => {
 const load = async () => {
   return localforage.getItem<State>('state')
     .then(state => state != null
-        ? state
-        : initializer()
-      );
+      ? state
+      : initializer()
+    );
 }
 
 const reducer: React.Reducer<State, Action> =
   (previous, action) => {
     console.log(previous, action);
-    switch(action.type) {
+    switch (action.type) {
       case "LOAD": return action.state;
+      case "RESET": return initializer();
       case "GENERATE": return {
         ...previous,
         brief: briefFactory(),
@@ -44,6 +47,35 @@ const reducer: React.Reducer<State, Action> =
         const next = cloneDeep(previous); // This is extremely inefficient :(
         set(next, action.path, action.value);
         return next;
+      case "SELECT":
+        return {
+          ...previous,
+          selection:
+            previous?.selection_mode === 'non-contiguous'
+              ? previous.selection.includes(action.id)
+                // Unselect - non-contiguous selection
+                ? previous.selection.filter(id => id !== action.id)
+                // Select - non-contiguous selection
+                : [...previous?.selection, action.id]
+              // Select - replace, Contiguous selection has not been implemented
+              : [action.id],
+              // TODO: Contiguous selection has not been implemented yet
+              // TODO: unselect when clicking outside any blocks
+        }
+      case "KEYDOWN":
+        return ['Meta', 'Control'].includes(action.event.key)
+          ? {
+            ...previous,
+            selection_mode: 'non-contiguous',
+          }
+          : previous;
+      case "KEYUP":
+        return ['Meta', 'Control'].includes(action.event.key)
+          ? {
+            ...previous,
+            selection_mode: 'replace',
+          }
+          : previous;
       default:
         console.error(`Unknown action`, action);
         return previous;
@@ -61,11 +93,34 @@ function App() {
   // Save application state when it changes
   useEffect(() => { save(state); }, [state]);
 
-  return <div className="app">
-    <Toolbar state={state} dispatch={dispatch} />
-    <Outline state={state} dispatch={dispatch} />
-    <Brief state={state} dispatch={dispatch} {...state.brief} />
-  </div>;
+  // Set up global event listeners
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      dispatch({ type: "KEYDOWN", event });
+    };
+
+    const onKeyUp = (event: KeyboardEvent) => {
+      dispatch({ type: "KEYUP", event });
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+
+    // Clean up when the component dismounts
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+    }
+
+  }, [dispatch]);
+
+  return (
+    <div className="app">
+      <Toolbar state={state} dispatch={dispatch} />
+      <Outline state={state} dispatch={dispatch} />
+      <Brief state={state} dispatch={dispatch} {...state.brief} />
+    </div>
+  );
 }
 
 export default App;

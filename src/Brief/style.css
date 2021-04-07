@@ -34,3 +34,14 @@
 .quote::after {
   content: '\201D';
 } */
+
+.block {
+  border: .125rem solid transparent;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+
+.block.selected {
+  outline: .125rem solid #EEE;
+  /* background: #F8F8F8; */
+}

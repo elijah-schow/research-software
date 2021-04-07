@@ -11,9 +11,9 @@ export const Brief: FC<BriefProps> = ({ state, dispatch, ...brief }) => {
             .values(brief.blocks)
             .map(block => (
                 <Blocks
+                    key={block.id}
                     state={state}
                     dispatch={dispatch}
-                    key={block.id}
                     {...block}
                 />
             ))

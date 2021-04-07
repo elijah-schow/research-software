@@ -90,12 +90,24 @@ type PseudoContext = {
     path?: string,
 };
 
+type SelectionModes = 
+    | "non-contiguous"
+    | "contiguous"
+    | "replace";
+
 type State = {
     brief: Brief;
+    selection: ID[];
+    selection_mode: SelectionModes;
 }
 
 type Action =
   | { type: "GENERATE" }
+  | { type: "RESET" }
   | { type: "LOAD", state: State }
   | { type: "SET", path: string, value: unknown } // This destroys type safety :(
+  | { type: "SELECT", id: ID } 
+  | { type: "UNSELECT", id: ID } 
+  | { type: "KEYDOWN", event: KeyboardEvent } 
+  | { type: "KEYUP", event: KeyboardEvent } 
   ;

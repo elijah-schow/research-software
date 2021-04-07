@@ -32,7 +32,7 @@ const Editable: FC<EditableProps> = ({
         ? type === "textarea"
             ? value.split('\n')
                 .filter(p => !!p.trim()) // remove empty paragraphs
-                .map(p => <p>{p}</p>)
+                .map((p, i) => <p key={i}>{p}</p>)
             : <span>{value}</span>
         : placeholder
 
