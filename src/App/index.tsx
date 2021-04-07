@@ -37,7 +37,12 @@ const reducer: React.Reducer<State, Action> =
   (previous, action) => {
     console.log(previous, action);
     switch (action.type) {
-      case "LOAD": return action.state;
+      case "LOAD": return {
+        ...action.state,
+        // Overwrite selection mode. It should always start as 'replace'.
+        // TODO: add a allowlist or denylist of properties to load
+        selection_mode: 'replace',
+      };
       case "RESET": return initializer();
       case "GENERATE": return {
         ...previous,
