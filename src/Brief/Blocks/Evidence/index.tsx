@@ -1,23 +1,17 @@
-import React, { useContext } from 'react'
-import classNames from 'classnames';
-import Editable from '../../../Editable';
-import Citation from './Citation'
+import React, { useContext } from 'react';
 import { Context } from '../../../App';
+import Editable from '../../../Editable';
+import Base from '../Base';
+import Citation from './Citation';
 import "./style.css"
 
 export const Evidence: React.FC<Evidence> = (block) => {
-    const { state, dispatch } = useContext(Context);
+    const { state } = useContext(Context);
     const { brief } = state;
     const source = block.source ? brief.sources[block.source] : null;
 
     return (
-        <article
-            id={block.id}
-            className={classNames("evidence", "block", {
-                'selected': state?.selection?.includes(block.id),
-            })}
-            onClick={() => dispatch({ type: "SELECT", id: block.id })}
-        >
+        <Base {...block}>
             <div className="tag">
                 <Editable name="tag" block={block} />
             </div>
@@ -36,7 +30,7 @@ export const Evidence: React.FC<Evidence> = (block) => {
                     placeholder="Quote"
                 />
             </blockquote>
-        </article>
+        </Base>
     );
 }
 

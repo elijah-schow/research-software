@@ -1,23 +1,17 @@
-import classnames from 'classnames';
 import React, { useContext } from 'react';
 import { Context } from '../../../App';
 import Editable from '../../../Editable';
+import Base from '../Base';
 import './style.css'
 
 export const TOC: React.FC<TOC> = (block) => {
-    const { state, dispatch } = useContext(Context);
+    const { state } = useContext(Context);
 
     const headings = Object.values(state.brief.blocks)
         .filter(b => ['heading', 'evidence'].includes(b.type));
 
     return (
-        <aside
-            id={block.id}
-            className={classnames('toc', 'block', {
-                'selected': state?.selection?.includes(block.id),
-            })}
-            onClick={() => dispatch({ type: "SELECT", id: block.id })}
-        >
+        <Base {...block}>
             <h2><Editable name="text" block={block} /></h2>
             <ol className="toc-list">
                 {headings.map((_block, index, _blocks) => (
@@ -42,7 +36,7 @@ export const TOC: React.FC<TOC> = (block) => {
                     </a>
                 ))}
             </ol>
-        </aside>
+        </Base>
     );
 }
 

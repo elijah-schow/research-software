@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import classnames from 'classnames'
+import React from 'react'
 import Editable from '../../Editable'
-import { Context } from '../../App';
+import Base from './Base';
 
 const elements = {
     1: 'h1',
@@ -13,29 +12,21 @@ const elements = {
 };
 
 export const Heading: React.FC<Heading> = (block) => {
-    const { state, dispatch } = useContext(Context);
-
     const type = elements[block.level] || elements[1];
 
     const children = (
         <Editable
             name="text"
-            value={block.text}
+            block={block}
             placeholder={`Heading ${block.level}`}
         />
     );
 
-    const props = {
-        id: block.id,
-        className: classnames({
-            'block': true,
-            'heading': true,
-            'selected': state?.selection?.includes(block.id),
-        }),
-        onClick: () => dispatch({ type: "SELECT", id: block.id }),
-    };
-
-    return React.createElement(type, props, children);
+    return (
+        <Base {...block}>{
+            React.createElement(type, {}, children)
+        }</Base>
+    );
 }
 
 export default React.memo(Heading);
