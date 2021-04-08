@@ -1,4 +1,4 @@
-import React, { FC, useContext, useCallback, ChangeEventHandler } from 'react'
+import React, { FC, useContext } from 'react'
 import startCase from 'lodash/startCase'
 import { Context } from "../App"
 import Editable from '../Editable';
@@ -7,7 +7,7 @@ import './style.css'
 export type OutlineProps = {};
 
 const Outline: FC<OutlineProps> = () => {
-    const { state, throttledDispatch } = useContext(Context);
+    const { state } = useContext(Context);
 
 
     // Get the last selected block
@@ -15,22 +15,12 @@ const Outline: FC<OutlineProps> = () => {
         && state.selection[state.selection.length - 1];
     const block = blockID && state.brief.blocks[blockID];
 
-    // Listen for change events
-    const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-        (event) => {
-            throttledDispatch({
-                type: "SET",
-                path: `brief.blocks.${block.id}.${event.target.name}`,
-                value: event.target.value
-            });
-        },
-        [throttledDispatch, block]
-    );
-
     // Exit early if nothing is selected
     if (!block) return (
         <aside className="properties">
-            <div className="properties-body">No selection</div>
+            <div className="properties-wrapper">
+                <div className="properties-body">No selection</div>
+            </div>
         </aside>
     );
 
@@ -55,12 +45,7 @@ const Outline: FC<OutlineProps> = () => {
                                         typeof value !== "object" && value}</td> */}
                                     <td className="properties-value">
                                         {typeof value !== "object" && (
-                                            <Editable
-                                                name={key}
-                                                value={value}
-                                                onChange={onChange}
-                                                placeholder="Empty"
-                                            />
+                                            <Editable name={key} block={block} />
                                         )}
                                     </td>
                                 </tr>

@@ -1,9 +1,7 @@
-import React, { useCallback, ChangeEventHandler, useContext } from 'react'
+import React, { useContext } from 'react'
 import classnames from 'classnames'
 import Editable from '../../Editable'
 import { Context } from '../../App';
-
-export type HeadingProps = Heading;
 
 const elements = {
     1: 'h1',
@@ -14,27 +12,15 @@ const elements = {
     6: 'h6',
 };
 
-export const Heading: React.FC<HeadingProps> = (block) => {
-    const { state, dispatch, throttledDispatch } = useContext(Context);
+export const Heading: React.FC<Heading> = (block) => {
+    const { state, dispatch } = useContext(Context);
 
     const type = elements[block.level] || elements[1];
-
-    const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-        (event) => {
-            throttledDispatch({
-                type: "SET",
-                path: `brief.blocks.${block.id}.${event.target.name}`,
-                value: event.target.value
-            });
-        },
-        [throttledDispatch, block]
-    );
 
     const children = (
         <Editable
             name="text"
             value={block.text}
-            onChange={onChange}
             placeholder={`Heading ${block.level}`}
         />
     );

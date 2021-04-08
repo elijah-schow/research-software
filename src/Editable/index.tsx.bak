@@ -1,51 +1,40 @@
-import React, { ChangeEventHandler, useState, useCallback, useContext } from "react";
-import get from "lodash/get";
-import { Context } from "../App";
-import "./style.css";
+import React, { ChangeEventHandler, FC, useState } from "react";
+
+import "./style.css"
 
 export type EditableProps = {
+    value: string,
     name: string,
     type?: string,
-    block: Block,
+    onChange: ChangeEventHandler,
     placeholder?: string,
 };
 
 /** @source https://blog.logrocket.com/building-inline-editable-ui-in-react/ */
 
-const Editable: React.FC<EditableProps> = ({
+const Editable: FC<EditableProps> = ({
     name,
-    block,
+    value,
     type,
-    placeholder = "Editable",
+    placeholder = "Editable content",
+    onChange,
     ...props
 }) => {
-    const { throttledDispatch } = useContext(Context);
-
     const [editing, setEditing] = useState(false);
 
-    const onChange = useCallback<ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>>(
-        (event) => {
-            throttledDispatch({
-                type: "SET",
-                path: `brief.blocks.${block.id}.${event.target.name}`,
-                value: event.target.value
-            });
-        },
-        [throttledDispatch, block]
-    );
+    // const onKeyDown: KeyboardEventHandler = (event, type) => {
+    //     // no-op
+    // };
 
     const Control = type === "textarea" ? 'textarea' : 'input';
-
-    // const value = get(state, `brief.blocks.${block.id}.${name}`);
-    const value = get(block, name);
 
     const label = value
         ? type === "textarea"
             ? value.split('\n')
-                .filter((p: string) => !!p.trim()) // remove empty paragraphs
-                .map((p: string, i: number) => <p key={i}>{p}</p>)
+                .filter(p => !!p.trim()) // remove empty paragraphs
+                .map((p, i) => <p key={i}>{p}</p>)
             : <span>{value}</span>
-        : placeholder;
+        : placeholder
 
     return (
         <section {...props}>
@@ -53,6 +42,7 @@ const Editable: React.FC<EditableProps> = ({
                 <div
                     className="editable editing"
                     onBlur={() => setEditing(false)}
+                // onKeyDown={e => onKeyDown(e, type)}
                 >
                     <Control
                         className="w-full"
