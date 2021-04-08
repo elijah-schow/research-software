@@ -1,11 +1,14 @@
 import classnames from 'classnames';
-import React from 'react'
+import React, { useContext } from 'react';
+import { Context } from '../../../App';
 
 import './style.css'
 
-export type TOCProps = PseudoContext & TOC;
+export type TOCProps = TOC;
 
-export const TOC: React.FC<TOCProps> = ({ state, dispatch, ...block}) => {
+export const TOC: React.FC<TOCProps> = (block) => {
+    const { state, dispatch } = useContext(Context);
+
     const headings = Object.values(state.brief.blocks)
         .filter(b => ['heading', 'evidence']
             .includes(b.type));
@@ -35,7 +38,7 @@ export const TOC: React.FC<TOCProps> = ({ state, dispatch, ...block}) => {
                                 _block.type === 'evidence'
                                     ? _block.tag
                                     : _block.text
-                                }
+                            }
                             </span>
                         </div>
                         <div className="toc-page">1</div>

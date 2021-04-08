@@ -84,12 +84,6 @@ type Range = {
     attributes: {}
 }
 
-type PseudoContext = {
-    state: State,
-    dispatch: React.Dispatch<Action>,
-    path?: string,
-};
-
 type SelectionModes = 
     | "non-contiguous"
     | "contiguous"
@@ -111,3 +105,8 @@ type Action =
   | { type: "KEYDOWN", event: KeyboardEvent } 
   | { type: "KEYUP", event: KeyboardEvent } 
   ;
+
+type Context = {
+    state: State,
+    dispatch: React.Dispatch
+}

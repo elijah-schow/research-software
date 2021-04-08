@@ -1,13 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import classnames from 'classnames'
-
+import { Context } from "../App"
 import './style.css'
 
-export type OutlineProps = PseudoContext;
+export type OutlineProps = {};
 
-const Outline: FC<OutlineProps> = ({ state, dispatch }) => {
-    const { brief: { blocks } } = state;
-    
+const Outline: FC<OutlineProps> = () => {
+    const { state } = useContext(Context);
+
+    const blocks = state?.brief?.blocks;
+
     const headings = Object.values(blocks)
         .filter(b => ['heading', 'evidence']
             .includes(b.type));

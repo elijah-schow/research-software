@@ -1,10 +1,10 @@
-import React, { useCallback, ChangeEventHandler } from 'react'
+import React, { useCallback, ChangeEventHandler, useContext } from 'react'
 import classnames from 'classnames'
-
 import throttle from 'lodash/throttle'
 import Editable from '../../Editable'
+import { Context } from '../../App';
 
-export type HeadingProps = PseudoContext & Heading;
+export type HeadingProps = Heading;
 
 const elements = {
     1: 'h1',
@@ -15,9 +15,12 @@ const elements = {
     6: 'h6',
 };
 
-export const Heading: React.FC<HeadingProps> = ({ state, dispatch, ...block }) => {
+export const Heading: React.FC<HeadingProps> = (block) => {
+    const { state, dispatch } = useContext(Context);
+
     const type = elements[block.level] || elements[1];
 
+    // eslint-disable-next-line
     const throttledDispatch = useCallback(
         throttle(dispatch, 250),
         [dispatch]

@@ -1,19 +1,16 @@
-import React, { FC } from 'react';
+import React from 'react';
 import Blocks from './Blocks';
-
 import "./style.css";
 
-export type BriefProps = PseudoContext & Brief;
+export type BriefProps = Brief;
 
-export const Brief: FC<BriefProps> = ({ state, dispatch, ...brief }) => {
+export const Brief: React.FC<BriefProps> = ({ ...brief }) => {
     return <article className="brief">{
         Object
             .values(brief.blocks)
             .map(block => (
                 <Blocks
                     key={block.id}
-                    state={state}
-                    dispatch={dispatch}
                     {...block}
                 />
             ))

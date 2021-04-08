@@ -1,17 +1,19 @@
-import React, { FC, ChangeEventHandler, useCallback } from 'react'
+import React, { FC, ChangeEventHandler, useCallback, useContext } from 'react'
 import throttle from 'lodash/throttle';
 import classNames from 'classnames';
-
 import Editable from '../../../Editable';
 import Citation from './Citation'
+import { Context } from '../../../App';
 import "./style.css"
 
-export type EvidenceProps = PseudoContext & Evidence;
+export type EvidenceProps = Evidence;
 
-export const Evidence: FC<EvidenceProps> = ({ state, dispatch, ...block }) => {
+export const Evidence: FC<EvidenceProps> = (block) => {
+    const { state, dispatch } = useContext(Context);
     const { brief } = state;
     const source = block.source ? brief.sources[block.source] : null;
 
+    // eslint-disable-next-line
     const throttledDispatch = useCallback(
         throttle(dispatch, 250),
         [dispatch]
