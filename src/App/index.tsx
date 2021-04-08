@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer, useCallback } from 'react';
 import localforage from 'localforage';
 import throttle from 'lodash/throttle';
+import { reducer, initial, initializer } from './reducer'
 import Toolbar from '../Toolbar';
 import Brief from '../Brief';
 import Outline from '../Outline';
-import { reducer, initial, initializer } from './reducer'
+import Properties from '../Properties';
 import './style.css'
 
 const THROTTLE = 250;
@@ -25,10 +26,23 @@ const load = async () => {
 export const Context = React.createContext<Context>({
   state: initial,
   dispatch: (value: Action): void => { },
+  throttledDispatch: (value: Action): void => { },
 });
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initial);
+
+  // eslint-disable-next-line
+  const throttledDispatch = useCallback(
+    throttle(dispatch, 250),
+    [dispatch]
+  );
+
+  // Avoid uneccesary re-renders
+  const value = useMemo(
+    () => ({ state, dispatch, throttledDispatch }),
+    [state, dispatch, throttledDispatch]
+  );
 
   // Load previous application state on startup
   useEffect(() => {
@@ -59,15 +73,13 @@ function App() {
 
   }, [dispatch]);
 
-  // Avoid uneccesary re-renders
-  const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
-
   return (
     <Context.Provider value={value}>
       <div className="app">
         <Toolbar />
         <Outline />
         <Brief />
+        <Properties />
       </div>
     </Context.Provider>
   );

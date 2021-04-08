@@ -11,8 +11,7 @@ const Outline: FC<OutlineProps> = () => {
     const blocks = state?.brief?.blocks;
 
     const headings = Object.values(blocks)
-        .filter(b => ['heading', 'evidence']
-            .includes(b.type));
+        .filter(b => ['heading', 'evidence'].includes(b.type));
 
     return (
         <aside className="outline">

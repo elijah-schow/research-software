@@ -37,8 +37,6 @@
 
 .block {
   border: .125rem solid transparent;
-  margin: 0 -1rem;
-  padding: 0 1rem;
 }
 
 .block.selected {

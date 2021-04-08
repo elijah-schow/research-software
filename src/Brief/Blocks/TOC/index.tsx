@@ -1,17 +1,30 @@
 import classnames from 'classnames';
-import React, { useContext } from 'react';
+import React, { useContext, useCallback, ChangeEventHandler } from 'react';
 import { Context } from '../../../App';
+import Editable from '../../../Editable';
 
 import './style.css'
 
 export type TOCProps = TOC;
 
 export const TOC: React.FC<TOCProps> = (block) => {
-    const { state, dispatch } = useContext(Context);
+    const { state, dispatch, throttledDispatch } = useContext(Context);
 
     const headings = Object.values(state.brief.blocks)
-        .filter(b => ['heading', 'evidence']
-            .includes(b.type));
+        .filter(b => ['heading', 'evidence'].includes(b.type));
+
+
+    // Listen for change events
+    const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+        (event) => {
+            throttledDispatch({
+                type: "SET",
+                path: `brief.blocks.${block.id}.${event.target.name}`,
+                value: event.target.value
+            });
+        },
+        [throttledDispatch, block]
+    );
 
     return (
         <aside
@@ -21,7 +34,14 @@ export const TOC: React.FC<TOCProps> = (block) => {
             })}
             onClick={() => dispatch({ type: "SELECT", id: block.id })}
         >
-            <h2>{block.text}</h2>
+            <h2>
+                <Editable
+                    name="text"
+                    value={block.text}
+                    onChange={onChange}
+                    placeholder="Empty"
+                />
+            </h2>
             <ol className="toc-list">
                 {headings.map((_block, index, _blocks) => (
                     <a

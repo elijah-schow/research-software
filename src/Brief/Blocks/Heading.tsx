@@ -1,6 +1,5 @@
 import React, { useCallback, ChangeEventHandler, useContext } from 'react'
 import classnames from 'classnames'
-import throttle from 'lodash/throttle'
 import Editable from '../../Editable'
 import { Context } from '../../App';
 
@@ -16,15 +15,9 @@ const elements = {
 };
 
 export const Heading: React.FC<HeadingProps> = (block) => {
-    const { state, dispatch } = useContext(Context);
+    const { state, dispatch, throttledDispatch } = useContext(Context);
 
     const type = elements[block.level] || elements[1];
-
-    // eslint-disable-next-line
-    const throttledDispatch = useCallback(
-        throttle(dispatch, 250),
-        [dispatch]
-    );
 
     const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
         (event) => {

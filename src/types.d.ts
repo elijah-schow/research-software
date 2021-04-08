@@ -84,7 +84,7 @@ type Range = {
     attributes: {}
 }
 
-type SelectionModes = 
+type SelectionModes =
     | "non-contiguous"
     | "contiguous"
     | "replace";
@@ -96,17 +96,18 @@ type State = {
 }
 
 type Action =
-  | { type: "GENERATE" }
-  | { type: "RESET" }
-  | { type: "LOAD", state: State }
-  | { type: "SET", path: string, value: unknown } // This destroys type safety :(
-  | { type: "SELECT", id: ID } 
-  | { type: "UNSELECT", id: ID } 
-  | { type: "KEYDOWN", event: KeyboardEvent } 
-  | { type: "KEYUP", event: KeyboardEvent } 
-  ;
+    | { type: "GENERATE" }
+    | { type: "RESET" }
+    | { type: "LOAD", state: State }
+    | { type: "SET", path: string, value: unknown } // This destroys type safety :(
+    | { type: "SELECT", id: ID }
+    | { type: "UNSELECT", id: ID }
+    | { type: "KEYDOWN", event: KeyboardEvent }
+    | { type: "KEYUP", event: KeyboardEvent }
+    ;
 
 type Context = {
     state: State,
     dispatch: React.Dispatch
+    throttledDispatch: React.Dispatch
 }
