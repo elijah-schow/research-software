@@ -67,7 +67,7 @@ function App() {
       <div className="app">
         <Toolbar />
         <Outline />
-        <Brief {...state.brief} />
+        <Brief />
       </div>
     </Context.Provider>
   );

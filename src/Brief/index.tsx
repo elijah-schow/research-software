@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Blocks from './Blocks';
+import { Context } from "../App"
 import "./style.css";
 
-export type BriefProps = Brief;
-
-export const Brief: React.FC<BriefProps> = ({ ...brief }) => {
-    return <article className="brief">{
-        Object
-            .values(brief.blocks)
-            .map(block => (
-                <Blocks
-                    key={block.id}
-                    {...block}
-                />
-            ))
-    }</article>;
+export const Brief: React.FC = () => {
+    const { state } = useContext(Context);
+    return (
+        <article className="brief">{
+            Object
+                .values(state.brief.blocks)
+                .map(block => (
+                    <Blocks
+                        key={block.id}
+                        {...block}
+                    />
+                ))
+        }</article>
+    );
 }
 
 export default Brief;
