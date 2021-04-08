@@ -101,6 +101,7 @@ type Action =
     | { type: "LOAD", state: State }
     | { type: "SET", path: string, value: unknown } // This destroys type safety :(
     | { type: "SELECT", id: ID }
+    | { type: "CLEAR_SELECTION" }
     | { type: "UNSELECT", id: ID }
     | { type: "KEYDOWN", event: KeyboardEvent }
     | { type: "KEYUP", event: KeyboardEvent }

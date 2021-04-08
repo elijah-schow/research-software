@@ -45,6 +45,11 @@ export const reducer: React.Reducer<State, Action> =
                     // TODO: Contiguous selection has not been implemented yet
                     // TODO: unselect when clicking outside any blocks
                 }
+            case "CLEAR_SELECTION":
+                return {
+                    ...previous,
+                    selection: [],
+                };
             case "KEYDOWN":
                 return ['Meta', 'Control'].includes(action.event.key)
                     ? {
